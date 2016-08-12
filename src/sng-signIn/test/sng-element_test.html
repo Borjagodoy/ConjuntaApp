@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../sng-element.html">
+  </head>
+
+  <body>
+
+  	<test-fixture id="sng-element-fixture">
+      <template>
+  		  <sng-element></sng-element>
+  	  </template>
+    </test-fixture>
+
+  	<script>
+
+      suite('<sng-element>', function() {
+      	var myEl;
+
+        // Setup configuration getting text-fixture by ID
+      	setup(function() {
+      		myEl = fixture('sng-element-fixture');
+      	});
+
+    		test('defines the "name" property', function() {
+    			assert.equal(myEl.name, 'S|ngular');
+    		});
+
+    		test('button click makes text visible', function() {
+    			myEl.$$('paper-button').click();
+          assert.equal(myEl.visible, true);
+    		});
+
+    	})
+  	</script>
+  </body>
+</html>

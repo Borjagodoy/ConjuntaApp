@@ -1,0 +1,115 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../../bower_components/polymerfire/firebase-auth.html">
+<link rel="import" href="../../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">  
+
+<link rel="import" href="./sng-signIn-styles.html">
+
+<link rel="import" href="../firebase-write-data/firebase-write-data.html">
+<link rel="import" href="../firebase-read-data/firebase-read-data.html">
+
+
+<!--
+S|ngular Polymer test element.
+
+Examples:
+
+    <sng-signIn></sng-signIn>
+
+@demo demo/index.html
+-->
+<dom-module id="sng-sign-in">
+  <style include="sng-signIn-styles"></style>
+
+  <template>  
+  <firebase-app
+            name="endosement"
+            auth-domain="endorsement-cards.firebaseapp.com"
+            database-url="https://endorsement-cards.firebaseio.com"
+            api-key="AIzaSyCVogxnNFq5w4UgmxPieHodm1u5-_ZiGOE"
+            storage-bucket="endorsement-cards.appspot.com">
+      </firebase-app>
+    <paper-material elevation="1"> 
+       <img src="/images/sngular-logo-blue.png">
+        <form is="iron-form" hidden="true" method="get" action="/" id="eventsDemo">
+            <h1>Login</h1>
+            <paper-input name="name" label="Name" required auto-validate></paper-input>
+            <paper-input name="password" label="Password" type="password" required auto-validate></paper-input>
+            <paper-checkbox name="read" required>You must check this box</paper-checkbox><br>
+            <paper-button raised onclick="_reset(event)">Reset</paper-button>
+            <div class="output"></div>
+        </form> 
+        <paper-button on-tap="signInWithGoogle" class="google-auth">
+            <span class="google-icon"></span>
+            <span class="google-text">Sign in with Google</span>
+        </paper-button>   
+        <firebase-auth 
+          id="auth" 
+          app-name="endosement"
+          provider="google" 
+          on-error="showError">
+        </firebase-auth> 
+
+        <firebase-write-data app-name="endosement" path="/users/" data="{{userData}}" uid="{{userData.uid}} "></firebase-write-data>
+        <firebase-read-data path="/users" app-name="endosement" uid-search="{{uidSearch}}"></firebase-read-data>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'sng-sign-in',
+      properties: {
+        /**
+         * user logein in app
+         */
+        userData: {
+          type:Object
+
+        },
+        user: {
+          type:Object
+        },
+        uidSearch:{
+          type: String,
+          value:""
+        }
+      },
+      listeners:{
+      'exist-item': "_existUser"
+      },
+      /*
+      * Callback method to google api Oauth
+      */
+      signInWithGoogle: function() {
+        this.error = null;
+        var self = this;
+        this.$.auth.signInWithPopup()
+        .then(function(response){
+        self.user = response.user.providerData[0];
+        self.uidSearch=response.user.providerData[0].uid
+        })
+        .catch(function(error){
+          console.log(error);
+        });
+      },
+      /*
+      *Log Out method
+      */
+      signOut: function(){
+        this.error = null;
+        this.$.auth.signOut();
+      },
+      _existUser: function(ev,exist){
+
+        if(!exist){
+          this.set("userData", this.user); 
+          console.log(this.user);
+        }
+        window.location = "/#/cards-list";
+      }
+    });
+  </script>
+</dom-module>

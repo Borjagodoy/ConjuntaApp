@@ -1,0 +1,32 @@
+{
+  "name": "sng-element",
+  "version": "0.0.0",
+  "authors": [
+    "Jon Rojí Taboada <jon.roji@medianet.es>"
+  ],
+  "description": "S|ngular Polymer element",
+  "keywords": [
+    "web-component",
+    "polymer"
+  ],
+  "main": "sng-element.html",
+  "repository": {
+    "type": "git",
+    "url": "https://bitbucket.org/medianet/sng-element"
+  },
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/medianet/sng-element",
+  "ignore": [
+    "/.*",
+    "/test/"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer",
+    "paper-button": "PolymerElements/paper-button#^1.0.12"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers",
+    "web-component-tester": "^4.0.0"
+  }
+}

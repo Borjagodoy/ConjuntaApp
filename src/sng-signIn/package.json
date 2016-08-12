@@ -1,0 +1,28 @@
+{
+  "name": "sng-element",
+  "version": "1.0.0",
+  "description": "Sngular Polymer element",
+  "main": "sng-element.html",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://bitbucket.org/medianet/sng-element.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/medianet/sng-element#readme",
+  "devDependencies": {
+    "async": "^2.0.0-rc.6",
+    "gulp": "^3.9.1",
+    "gulp-filenames": "^2.1.0",
+    "gulp-insert": "^0.5.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "web-component-tester": "^4.3.1"
+  }
+}

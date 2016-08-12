@@ -1,0 +1,84 @@
+<dom-module id="user-list-styles"><template><style>
+:host{
+  @apply(--layout-vertical);
+  position:relative;
+
+}
+
+ ul.custom {
+  --organism-list: {
+    padding: 0;
+    list-style: none;
+  };
+  --organism-list__item-divider: {
+    border-top: 1px solid #E0E0E0;
+  };
+  --organism-list__li: {
+    padding-left: 17px;
+    background-color: #AA4BFF;
+  };
+  --organism-list__item: {
+    color: #fdf;
+    min-height: 54px;
+  };
+}
+  .users{
+    @apply(--layout-flex);
+    padding-left: 0%;
+    list-style: none;
+    overflow: scroll;
+    position: absolute;
+    padding-top: 33px;
+    padding-bottom: 33px;
+        width: 100%;
+
+
+ }
+ li{
+   border-bottom: 1px solid #E0E0E0;
+   padding-bottom: 1%;
+   padding-top: 1%;
+ }
+.footer-button {
+    width: 100%;
+    height: 200px;
+    position: fixed;
+    background:#243474;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    height: 50px;
+    color:white;
+     @apply(--layout-horizontal);
+    @apply(--layout-center);
+
+}
+.footer-button p{
+  padding-left: 4%;
+  width: 75%;
+}
+.footer-button button{
+  float:right;
+}
+.title-top {
+    @apply(--layout-horizontal);
+    @apply(--layout-center);
+
+    width: 100%;
+    position: fixed;
+    background: #243474;
+    left: 0px;
+    right: 0px;
+    height: 50px;
+    z-index: 2;
+    color:white;
+    text-align: center;
+}
+.title-top p{
+  margin: 0 auto;
+}
+.content{
+   @apply(--layout-vertical);
+
+}
+</style></template></dom-module>
