@@ -1,0 +1,5 @@
+[
+  {"conjuntaName": "Conjunta 1", "image": "/images/app-icon-144.png", "vendorsName": "Vendedor 1", "persons": 20},
+  {"conjuntaName": "Conjunta 2", "image": "/images/app-icon-144.png", "vendorsName": "Vendedor 2", "persons": 15},
+  {"conjuntaName": "Conjunta 3", "image": "/images/app-icon-144.png", "vendorsName": "Vendedor 3", "persons": 8}
+]
