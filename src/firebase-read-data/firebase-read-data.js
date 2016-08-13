@@ -64,9 +64,8 @@
         if(this.$.query.ref && this.uidSearch){
           this.$.query.ref.once("value")
           .then(function(snapshot) {
-            console.log(snapshot);
-            snapshot=snapshot.child(self.uidSearch);
-           self.fire("exist-item", snapshot.exists());       
+            var exist = snapshot.child(self.uidSearch).exists();
+           self.fire("exist-item", exist);       
       });
     }
     }

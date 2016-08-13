@@ -47,8 +47,6 @@ Examples:
           provider="google" 
           on-error="showError">
         </firebase-auth> 
-
-        <firebase-write-data app-name="conjuntaApp" path="/users/" data="{{userData}}" uid="{{userData.uid}} "></firebase-write-data>
         <firebase-read-data path="/users" app-name="conjuntaApp" uid-search="{{uidSearch}}"></firebase-read-data>
   </template>
 
@@ -84,8 +82,6 @@ Examples:
         .then(function(response){
         self.user = response.user.providerData[0];
         self.set("uidSearch",response.user.providerData[0].uid);
-        
-        console.log("uidSearch ", self.uidSearch)
         })
         .catch(function(error){
           console.log(error);
@@ -102,7 +98,6 @@ Examples:
 
         if(!exist){
           this.set("userData", this.user); 
-          console.log(this.user);
         }
         this.fire("login",{"user":this.userData, "exist":exist});
       }

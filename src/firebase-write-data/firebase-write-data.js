@@ -53,7 +53,8 @@
       },
       update: function(uid, data){
         var path = this.$.document.path=this.path+uid;
-        this.$.document.setStoredValue(path, this.data);
+        console.log("set",data);
+        this.$.document.setStoredValue(path, data);
       }
   });
 }());
