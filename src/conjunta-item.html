@@ -1,0 +1,143 @@
+<link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout.html">
+  <link rel="import" href="/bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
+  <link rel="import" href="/bower_components/iron-image/iron-image.html">
+  <link rel="import" href="/bower_components/paper-styles/color.html">
+  <link rel="import" href="/bower_components/paper-styles/typography.html">
+  <link rel="import" href="/bower_components/app-layout/app-toolbar/app-toolbar.html">
+  <link rel="import" href="/bower_components/paper-spinner/paper-spinner.html">
+  <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+  <link rel="import" href="/bower_components/iron-list/iron-list.html">
+
+<dom-module id="conjunta-item">
+
+<style is="custom-style">
+    body {
+      @apply(--paper-font-common-base);
+      margin: 0;
+      padding: 0;
+      background-color: #eee;
+    }
+    app-toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #F57C00;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+      color: white;
+      z-index: 1;
+      font-weight: bold;
+    }
+    .loadingIndicator {
+      text-align: center;
+      height: 40px;
+    }
+    .loadingIndicator paper-spinner {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+    iron-list {
+      padding-top: 64px;
+      padding-bottom: 16px;
+      --iron-list-items-container: {
+        max-width: 800px;
+        margin: auto;
+        margin-top: 60px;
+        margin-bottom: 10px;
+      };
+    }
+    .personItem {
+      @apply(--layout-horizontal);
+      margin: 16px 16px 0 16px;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: white;
+      border: 1px solid #ddd;
+    }
+    .avatar {
+      height: 40px;
+      width: 40px;
+      border-radius: 20px;
+      box-sizing: border-box;
+      background-color: #DDD;
+    }
+    .pad {
+      padding: 0 16px;
+      @apply(--layout-flex);
+      @apply(--layout-vertical);
+    }
+    .primary {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    address {
+      font-size: 14px;
+      margin: 10px 0;
+    }
+    .spacer {
+      @apply(--layout-flex);
+    }
+    .index {
+      width: 30px;
+    }
+
+    .inscritos {
+      position: absolute;
+      right: 50px;
+      bottom: 0;
+      font-weight: bold;
+    }
+  </style>
+
+  <template>
+
+    <iron-ajax auto
+      url="data.json"
+      handle-as="json"
+      last-response="{{data}}">
+    </iron-ajax>
+
+    <iron-list id="list" items="{{data}}" as="person">
+      <template>
+        <div>
+          <div class="personItem">
+            <iron-image class="avatar" sizing="contain" src="[[person.image]]"></iron-image>
+            <span>[[person.vendorsName]]</span>
+            <div class="pad">
+              <div class="primary">[[person.conjuntaName]]</div>
+
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+              proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+                <span class="inscritos">[[person.persons]] inscritos</span>                    
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+      
+    </iron-list>
+
+  </template>
+
+  <script>
+
+    Polymer({
+      is: "conjunta-item",
+
+      properties: {
+        data: {
+          type: Object
+        }
+      }
+      
+    });
+
+  </script>
+
+</dom-module>
