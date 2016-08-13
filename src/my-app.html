@@ -140,7 +140,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
       listeners:{
-        'login':'loginAuth'
+        'login':'loginAuth',
+        'register-succesfull':'registerSucces'
       },
 
       observers: [
@@ -169,6 +170,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.set("page","view3");
           this.set('route.path', '/view3')
         }
+      },
+      registerSucces: function(ev, param){
+          this.set("page","view3");
+          this.set('route.path', '/view3')
       }
 
     });
