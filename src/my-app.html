@@ -21,22 +21,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="./users-list/users-list.html">
+<link rel="import" href="./register-user-form/register-user-form.html">
 <link rel="import" href="my-icons.html">
+<link rel="import" href="app-theme.html">
 
 <dom-module id="my-app">
 
   <template>
-
+   <style include="custom-styles"></style>
     <style>
 
       :host {
-        display: block;
-        --app-primary-color: #4285f4;
+        display: block; 
         --app-secondary-color: black;
       }
 
       app-header {
-        background-color: var(--app-primary-color);
+        background-color:var(--default-primary-color);
         color: #fff;
       }
       app-header paper-icon-button {
@@ -95,14 +96,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
           <firebase-app
-            name="endosement"
-            auth-domain="endorsement-cards.firebaseapp.com"
-            database-url="https://endorsement-cards.firebaseio.com"
-            api-key="AIzaSyCVogxnNFq5w4UgmxPieHodm1u5-_ZiGOE"
-            storage-bucket="endorsement-cards.appspot.com">
+            name="conjuntaApp"
+            auth-domain="conjuntaapp.firebaseapp.com"
+            database-url="https://conjuntaapp.firebaseio.com"
+            api-key="AIzaSyD9wRqDg8FSIibOA4eGU9ajYjltwdUPmVw"
+            storage-bucket="conjuntaapp.appspot.com">
       </firebase-app>
           <users-list name="view1"></users-list>
-          <my-view2 name="view2"></my-view2>
+          <register-user-form name="view2"></register-user-form>
           <my-view3 name="view3"></my-view3>
         </iron-pages>
 

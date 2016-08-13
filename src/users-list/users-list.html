@@ -2,7 +2,7 @@
 <link rel="import" href="../firebase-read-data/firebase-read-data.html">
 <link rel="import" href="/bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="./user-list-style.html">
-<link rel="import" href="../../bower_components/iron-localstorage/iron-localstorage.html">
+<link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
 
 
 <dom-module id="users-list">
@@ -14,10 +14,10 @@
       <div class="title-top">
         <p>+1 Php</p>
       </div>
-      <firebase-read-data path="/users" app-name="endosement" response="{{users}}"></firebase-read-data>
+      <firebase-read-data path="/users" app-name="conjuntaApp" response="{{users}}"></firebase-read-data>
       
         <template is="dom-repeat" items="[[listData]]">
-          <p>{{item.uid}}
+          <p>{{item.uid}}</p>
         </template>
       <div class="footer-button">
       <template is="dom-if" if="{{selectedArray.length}}">
@@ -32,10 +32,6 @@
 (function() {
   Polymer({
     is: 'users-list',
-    listeners:{
-      'select-user': "_selectedUser"
-    },
-
     properties: {
       users: {
         type: Object,
