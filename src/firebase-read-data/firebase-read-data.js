@@ -65,7 +65,7 @@
           this.$.query.ref.once("value")
           .then(function(snapshot) {
             console.log(snapshot);
-            snapshot.child(self.uidSearch);
+            snapshot=snapshot.child(self.uidSearch);
            self.fire("exist-item", snapshot.exists());       
       });
     }
