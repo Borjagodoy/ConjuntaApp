@@ -9,21 +9,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
   <link rel="import" href="/bower_components/polymer/polymer.html">
+  <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
   <link rel="import" href="./conjunta-item.html">
 
-<dom-module id="my-view3">
+<dom-module id="conjunta-list">
 
 <style type="text/css"></style>
 
 <template>
-  <conjunta-item></conjunta-item>
+  <iron-ajax auto
+      url="data.json"
+      handle-as="json"
+      last-response="{{data}}">
+    </iron-ajax>
+
+  <iron-list id="list" items="{{data}}" as="person">
+    <template>
+      <conjunta-item data="{{person}}"></conjunta-item>
+    </template>
+  </iron-list>
 </template>
 
 
 
 <script type="text/javascript">
   Polymer({
-    is: "my-view3"
+    is: "conjunta-list"
   });
 </script>
 
