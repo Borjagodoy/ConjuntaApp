@@ -21,18 +21,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="./users-list/users-list.html">
-<<<<<<< HEAD
 <link rel="import" href="./sng-signIn/sng-signIn.html">
-=======
 <link rel="import" href="./register-user-form/register-user-form.html">
->>>>>>> register-user-form
 <link rel="import" href="my-icons.html">
 <link rel="import" href="app-theme.html">
 
 <dom-module id="my-app">
 
   <template>
-   <style include="custom-styles"></style>
     <style>
 
       :host {
@@ -76,17 +72,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         data="{{routeData}}"
         tail="{{subroute}}"></app-route>
 
-    <app-drawer-layout fullbleed>
-     <template is="dom-if" if="{{_isLogin}}">
+    <app-drawer-layout fullbleed >
+     
         <!-- Drawer content -->
         <app-drawer>
           <app-toolbar>Menu</app-toolbar>
           <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
             <a name="view2" href="/view2">View Two</a>
-            <a name="view3" href="/view3">View Three</a>
+            <a name="view3" href="/view3">lista de conjuntas</a>
           </iron-selector>
         </app-drawer>
-      </template>
+     
       <!-- Main content -->
       <app-header-layout mode="scroll">
 
@@ -150,7 +146,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _routePageChanged: function(page) {
         this.page = page || 'view1';
-        this.set("_isLogin", !(this.page === "view1"));
+       
       },
 
       _pageChanged: function(page) {
@@ -173,7 +169,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       registerSucces: function(ev, param){
           this.set("page","view3");
-          this.set('route.path', '/view3')
+          this.set('route.path', '/view3');
+          
       }
 
     });
