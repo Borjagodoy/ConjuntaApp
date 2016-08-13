@@ -61,11 +61,12 @@
       */
       exist: function(){
         var self = this;
-        var query = this.$.query;
         if(this.$.query.ref && this.uidSearch){
           this.$.query.ref.once("value")
           .then(function(snapshot) {
-            self.fire("exist-item", snapshot.child(self.uidSearch).exists()); // true       
+            console.log(snapshot);
+            snapshot.child(self.uidSearch);
+           self.fire("exist-item", snapshot.exists());       
       });
     }
     }

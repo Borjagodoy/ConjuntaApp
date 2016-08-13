@@ -21,6 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
 <link rel="import" href="./users-list/users-list.html">
+<link rel="import" href="./sng-signIn/sng-signIn.html">
 <link rel="import" href="my-icons.html">
 
 <dom-module id="my-app">
@@ -72,17 +73,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         tail="{{subroute}}"></app-route>
 
     <app-drawer-layout fullbleed>
-
-      <!-- Drawer content -->
-      <app-drawer>
-        <app-toolbar>Menu</app-toolbar>
-        <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-          <a name="view1" href="/view1">View One</a>
-          <a name="view2" href="/view2">View Two</a>
-          <a name="view3" href="/view3">View Three</a>
-        </iron-selector>
-      </app-drawer>
-
+     <template is="dom-if" if="{{_isLogin}}">
+        <!-- Drawer content -->
+        <app-drawer>
+          <app-toolbar>Menu</app-toolbar>
+          <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
+            <a name="view2" href="/view2">View Two</a>
+            <a name="view3" href="/view3">View Three</a>
+          </iron-selector>
+        </app-drawer>
+      </template>
       <!-- Main content -->
       <app-header-layout has-scrolling-region>
 
@@ -95,13 +95,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         <iron-pages role="main" selected="[[page]]" attr-for-selected="name">
           <firebase-app
-            name="endosement"
-            auth-domain="endorsement-cards.firebaseapp.com"
-            database-url="https://endorsement-cards.firebaseio.com"
-            api-key="AIzaSyCVogxnNFq5w4UgmxPieHodm1u5-_ZiGOE"
-            storage-bucket="endorsement-cards.appspot.com">
+            name="conjuntaApp"
+            auth-domain="conjuntaapp.firebaseapp.com"
+            database-url="https://conjuntaapp.firebaseio.com"
+            api-key="AIzaSyD9wRqDg8FSIibOA4eGU9ajYjltwdUPmVw"
+            storage-bucket="conjuntaapp.appspot.com">
       </firebase-app>
-          <users-list name="view1"></users-list>
+          <sng-sign-in name="view1"></sng-sign-in>
           <my-view2 name="view2"></my-view2>
           <my-view3 name="view3"></my-view3>
         </iron-pages>
@@ -125,7 +125,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           reflectToAttribute: true,
           observer: '_pageChanged'
         },
+        _isLogin:{
+          type:Boolean,
+          value: false
+        }
 
+      },
+      listeners:{
+        'login':'loginAuth'
       },
 
       observers: [
@@ -134,12 +141,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _routePageChanged: function(page) {
         this.page = page || 'view1';
+        this.set("_isLogin", !(this.page === "view1"));
       },
 
       _pageChanged: function(page) {
         // load page import on demand.
         this.importHref(
           this.resolveUrl('my-' + page + '.html'), null, null, true);
+      },
+      loginAuth: function(ev, param){
+        console.log(param.exist);
+        if(!param.exist){
+          this.set("page","view2");
+          this.set('route.path', '/view2')
+        }
+        else{
+          this.set("page","view3");
+          this.set('route.path', '/view2')
+        }
       }
 
     });

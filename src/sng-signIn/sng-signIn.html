@@ -6,6 +6,7 @@
 <link rel="import" href="../../bower_components/paper-spinner/paper-spinner.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">  
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">  
 
 <link rel="import" href="./sng-signIn-styles.html">
 
@@ -26,15 +27,8 @@ Examples:
   <style include="sng-signIn-styles"></style>
 
   <template>  
-  <firebase-app
-            name="endosement"
-            auth-domain="endorsement-cards.firebaseapp.com"
-            database-url="https://endorsement-cards.firebaseio.com"
-            api-key="AIzaSyCVogxnNFq5w4UgmxPieHodm1u5-_ZiGOE"
-            storage-bucket="endorsement-cards.appspot.com">
-      </firebase-app>
     <paper-material elevation="1"> 
-       <img src="/images/sngular-logo-blue.png">
+       <img src="http://orizhial.com/wp-content/uploads/2014/05/Facebook-cambia-el-nivel-de-privacidad-por-defecto.jpg">
         <form is="iron-form" hidden="true" method="get" action="/" id="eventsDemo">
             <h1>Login</h1>
             <paper-input name="name" label="Name" required auto-validate></paper-input>
@@ -45,17 +39,17 @@ Examples:
         </form> 
         <paper-button on-tap="signInWithGoogle" class="google-auth">
             <span class="google-icon"></span>
-            <span class="google-text">Sign in with Google</span>
+            <span class="google-text">Sign in </span>
         </paper-button>   
         <firebase-auth 
           id="auth" 
-          app-name="endosement"
+          app-name="conjuntaApp"
           provider="google" 
           on-error="showError">
         </firebase-auth> 
 
-        <firebase-write-data app-name="endosement" path="/users/" data="{{userData}}" uid="{{userData.uid}} "></firebase-write-data>
-        <firebase-read-data path="/users" app-name="endosement" uid-search="{{uidSearch}}"></firebase-read-data>
+        <firebase-write-data app-name="conjuntaApp" path="/users/" data="{{userData}}" uid="{{userData.uid}} "></firebase-write-data>
+        <firebase-read-data path="/users" app-name="conjuntaApp" uid-search="{{uidSearch}}"></firebase-read-data>
   </template>
 
   <script>
@@ -89,7 +83,9 @@ Examples:
         this.$.auth.signInWithPopup()
         .then(function(response){
         self.user = response.user.providerData[0];
-        self.uidSearch=response.user.providerData[0].uid
+        self.set("uidSearch",response.user.providerData[0].uid);
+        
+        console.log("uidSearch ", self.uidSearch)
         })
         .catch(function(error){
           console.log(error);
@@ -108,7 +104,7 @@ Examples:
           this.set("userData", this.user); 
           console.log(this.user);
         }
-        window.location = "/#/cards-list";
+        this.fire("login",{"user":this.userData, "exist":exist});
       }
     });
   </script>
