@@ -34,7 +34,8 @@
       * URL of file/image upload to firebase
       */
       _downloadURL: {
-        type: String
+        type: String,
+        notify: true
       }
     },
     /**
@@ -47,14 +48,13 @@
     */
     _uploadFile: function(ev){
       var file = ev.target.files[0];
-
       var routeName = this.directory + file.name;
       if(file.size > '30720'){
+        console.log("")
         this.fire("message", "Unsuccessful! It's too big");
       }
       else{
         var storageRef = firebase.app(this.firebaseName).storage().ref(routeName);
-
         //upload file
         var upload = storageRef.put(file);
         var self = this;

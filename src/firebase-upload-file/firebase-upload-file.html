@@ -16,9 +16,13 @@ _Example_:
       text-align: center;
       font-size: 24px;
     }
+    img{
+      width: 100%;
+    }
   </style>
   <template>
     <h4>[[title]]</h4>
+    <img src="{{_downloadURL}}">
     <input type="file" id="image" value="upload" accept="[[fileType]]" on-change="_uploadFile"/>
   </template>
 <script src="firebase-upload-file.js"></script>
