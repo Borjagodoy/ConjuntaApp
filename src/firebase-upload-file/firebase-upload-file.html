@@ -1,4 +1,5 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/paper-progress/paper-progress.html">
 <!--
 `<firebase-upload-file>` Upload file/image to firebase storage.
 
@@ -19,11 +20,23 @@ _Example_:
     img{
       width: 100%;
     }
+     paper-progress {
+    width: 100%;
+    margin:0 auto;
+  }
+  .loadPicture{
+    margin-bottom: 15%;
+  }
   </style>
   <template>
     <h4>[[title]]</h4>
-    <img src="{{_downloadURL}}">
-    <input type="file" id="image" value="upload" accept="[[fileType]]" on-change="_uploadFile"/>
+    <div class="loadPicture">
+      <img hidden id="imageContent" src="{{downloadURL}}">  
+      <paper-progress id="progress" hidden  indeterminate></paper-progress>
+    </div>  
+
+      <input type="file" id="image" value="upload" accept="[[fileType]]" on-change="_uploadFile"/>
+   
   </template>
 <script src="firebase-upload-file.js"></script>
 

@@ -39,7 +39,7 @@
               <paper-textarea name="Bio" label="Descripción" value="{{conjunta.description}}"  char-counter maxlength="500"></paper-textarea>
               <br>
               <div class="upload-picture">
-                 <firebase-upload-file firebase-name='conjuntaApp' title="Upload picture"></firebase-upload-file>
+                 <firebase-upload-file firebase-name='conjuntaApp' downloadURL="{{conjunta.imageUrl}}" title="Upload picture"></firebase-upload-file>
               </div>
             </form>
           </div>
@@ -66,6 +66,9 @@
         type: Object
       }
     },
+    listeners:{
+      'fileURL': '_conjuntaPhoto'
+    },
     ready:function(){
       this.conjunta ={
         "name":""
@@ -73,7 +76,7 @@
     },
      sendConjuntaData: function(){
       var uid = this._randomUid();
-      console.log(this.conjunta.nombre);
+      console.log(this.conjunta.imageUrl);
       console.log(this.user);
 
        this.set("conjuntaData", {"conjuntaInfo":this.conjunta,
@@ -84,6 +87,9 @@
      _randomUid: function(){
         return '_' + Math.random().toString(36).substr(2, 9);
       },
+      _conjuntaPhoto: function(photo){
+        this.set("conjunta.imageUrl",photo);
+      }
      
   });
 })();

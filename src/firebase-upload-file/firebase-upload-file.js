@@ -33,7 +33,7 @@
       /**
       * URL of file/image upload to firebase
       */
-      _downloadURL: {
+      downloadURL: {
         type: String,
         notify: true
       }
@@ -49,7 +49,8 @@
     _uploadFile: function(ev){
       var file = ev.target.files[0];
       var routeName = this.directory + file.name;
-      if(file.size > '30720'){
+      this.set("downloadURL","")
+      if(file.size > '3000000000000720'){
         console.log("")
         this.fire("message", "Unsuccessful! It's too big");
       }
@@ -57,6 +58,9 @@
         var storageRef = firebase.app(this.firebaseName).storage().ref(routeName);
         //upload file
         var upload = storageRef.put(file);
+        this.$.progress.hidden = false;
+        this.$.imageContent.hidden = true;
+
         var self = this;
         upload.on('state_changed', function(snapshot){
 
@@ -64,9 +68,13 @@
             // Handle unsuccessful uploads
             self.fire("message", "Upload unsuccessful");
         }, function() {
-            self.set("_downloadURL", upload.snapshot.downloadURL);
-            self.fire("fileURL", self._downloadURL);
+            self.set("downloadURL", upload.snapshot.downloadURL);
+            self.fire("fileURL", self.downloadURL);
             self.fire("message", "Successful!");
+            self.$.progress.hidden = true;
+            self.$.imageContent.hidden = false;
+
+
         });
       }
     }
