@@ -21,7 +21,7 @@
 
         <paper-card heading="A crear una nueva conjunta :)">
           <div class="card-content">
-          <form >
+          <form id="form" method="get" action="/view3">
               <paper-input name="nameconjunta" label="Nombre de conjunta" value="{{conjunta.name}}" char-counter char-counter maxlength="32" error-message="Name conjunta must have between 4 and 32 letters, numbers, - or _." required></paper-input>
               <paper-input name="finish-date" label="Fecha de fin (dd/mm/yyyy)" value="{{conjunta.finishDate}}" error-message="Insert a valid date" auto-validate pattern="^(?:(?:0?[1-9]|1\d|2[0-8])\/(?:0?[1-9]|1[0-2]))\/(?:[1-9]\d\d\d|\d[1-9]\d\d|\d\d[1-9]\d|\d\d\d[1-9])$|^(?:(?:31\/(?:0?[13578]|1[02]))|(?:(?:29|30)\/(?:0?[1,3-9]|1[0-2])))\/(?:[1-9]\d\d\d|\d[1-9]\d\d|\d\d[1-9]\d|\d\d\d[1-9])$|^(29\/0?2)\/(?:(?:0[48]00|[13579][26]00|[2468][048]00)|(?:\d\d)?(?:0[48]|[2468][048]|[13579][26]))$" required></paper-input>
               <!--<paper-dialog id="dialog" class="paper-date-picker-dialog" modal
@@ -60,7 +60,7 @@
         type: Object
       },
       conjunta:{
-        type: String
+        type: Object
       },
       conjuntaData:{
         type: Object
@@ -71,7 +71,6 @@
     },
     ready:function(){
       this.conjunta ={
-        "name":""
       }
     },
      sendConjuntaData: function(){
@@ -82,13 +81,22 @@
        this.set("conjuntaData", {"conjuntaInfo":this.conjunta,
                                   "uid": uid,
                                   "user": this.user});
-       this.fire("add-conjunta-succesfull",{response:"Add conjunta succesfull"})
+       if(this.validate()){
+        this.fire("add-conjunta-succesfull",{response:"Add conjunta succesfull"});
+        this.set("conjunta", {});
+       }
+       else{
+        console.log("error")
+       }
+       
      },
      _randomUid: function(){
         return '_' + Math.random().toString(36).substr(2, 9);
       },
-      _conjuntaPhoto: function(photo){
-        this.set("conjunta.imageUrl",photo);
+      validate: function(){
+        var validate = (this.conjunta.name && this.conjunta.finishDate && this.conjunta.minParticipant && this.conjunta.estimatePrice && this.conjunta.imageUrl);
+        console.log("validate",validate);
+        return validate;
       }
      
   });

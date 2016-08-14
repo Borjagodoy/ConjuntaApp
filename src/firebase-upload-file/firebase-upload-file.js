@@ -38,6 +38,12 @@
         notify: true
       }
     },
+    listeners:{
+      'new-conjunta': '_addsuccesfull'
+    },
+    ready: function(){
+      console.log("ready")
+    },
     /**
     * Upload file/image to firebase storage:
     *
@@ -74,9 +80,14 @@
             self.$.progress.hidden = true;
             self.$.imageContent.hidden = false;
 
-
         });
       }
+    },
+    _addsuccesfull: function(){
+      console.log("hola")
+      this.set("downloadURL","");
+      this.$.imageContent.hidden = true;
+
     }
   });
 }());
