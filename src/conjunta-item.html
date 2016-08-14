@@ -5,7 +5,6 @@
   <link rel="import" href="/bower_components/paper-styles/typography.html">
   <link rel="import" href="/bower_components/app-layout/app-toolbar/app-toolbar.html">
   <link rel="import" href="/bower_components/paper-spinner/paper-spinner.html">
-  <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
   <link rel="import" href="/bower_components/iron-list/iron-list.html">
 
 <dom-module id="conjunta-item">
@@ -106,39 +105,26 @@
   </style>
 
   <template>
+    <div>
+      <div class="personItem">
 
-    <iron-ajax auto
-      url="data.json"
-      handle-as="json"
-      last-response="{{data}}">
-    </iron-ajax>
+        <div class="portait">
+          <iron-image class="avatar" sizing="contain" src="[[data.image]]"></iron-image>
+          <br>
+          <span>[[data.vendorsName]]</span>
+        </div>
 
-    <iron-list id="list" items="{{data}}" as="person">
-      <template>
-        <div>
-          <div class="personItem">
+        <div class="title">
+          <h2>[[data.conjuntaName]]</h2>
+        </div>
 
-            <div class="portait">
-              <iron-image class="avatar" sizing="contain" src="[[person.image]]"></iron-image>
-              <br>
-              <span>[[person.vendorsName]]</span>
-            </div>
+        <div class="pad">
 
-            <div class="title">
-              <h2>[[person.conjuntaName]]</h2>
-            </div>
-    
-            <div class="pad">
-
-                <span class="inscritos">[[person.persons]] inscritos</span>                    
-              </div>
-            </div>
+            <span class="inscritos">[[data.persons]] inscritos</span>                    
           </div>
         </div>
-      </template>
-      
-    </iron-list>
-
+      </div>
+    </div>
   </template>
 
   <script>
