@@ -1,0 +1,188 @@
+<link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout.html">
+  <link rel="import" href="/bower_components/iron-scroll-threshold/iron-scroll-threshold.html">
+  <link rel="import" href="/bower_components/iron-image/iron-image.html">
+  <link rel="import" href="/bower_components/paper-styles/color.html">
+  <link rel="import" href="/bower_components/paper-styles/typography.html">
+  <link rel="import" href="/bower_components/app-layout/app-toolbar/app-toolbar.html">
+  <link rel="import" href="/bower_components/paper-spinner/paper-spinner.html">
+  <link rel="import" href="/bower_components/paper-card/paper-card.html">
+
+<dom-module id="conjunta-card">
+
+<style is="custom-style">
+    body {
+      @apply(--paper-font-common-base);
+      margin: 0;
+      padding: 0;
+      background-color: #eee;
+    }
+    app-toolbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #F57C00;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+      color: white;
+      z-index: 1;
+      font-weight: bold;
+    }
+    .loadingIndicator {
+      text-align: center;
+      height: 40px;
+    }
+    .loadingIndicator paper-spinner {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+    iron-list {
+      padding-top: 64px;
+      padding-bottom: 16px;
+      --iron-list-items-container: {
+        max-width: 800px;
+        margin: auto;
+        margin-top: 60px;
+        margin-bottom: 10px;
+      };
+    }
+    .personItem {
+      @apply(--layout-horizontal);
+      margin: 16px 16px 0 16px;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: white;
+      border: 1px solid #ddd;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .personItem div {
+      margin: 20px 0;
+    }
+    .avatar {
+      height: 40px;
+      width: 40px;
+      border-radius: 20px;
+      box-sizing: border-box;
+      background-color: #DDD;
+    }
+    .pad {
+      padding: 0 16px;
+      @apply(--layout-flex);
+      @apply(--layout-vertical);
+    }
+    .primary {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    address {
+      font-size: 14px;
+      margin: 10px 0;
+    }
+    .spacer {
+      @apply(--layout-flex);
+    }
+    .index {
+      width: 30px;
+    }
+
+    .portait {
+      width: 40%;
+    }
+
+    .title {
+      width: 60%;
+    }
+
+    .inscritos {
+      font-weight: bold;
+    }
+
+    paper-card {
+      width: 100%;
+      margin: 20px 5px;
+    }
+
+    @media (min-width: 1024px) {
+      paper-card {
+        width: 30%;
+      }
+    }
+
+    iron-image {
+        width: 45px;
+        height: 45px;
+        border-radius: 50px;
+        vertical-align: middle;
+      }
+
+      .card-actions {
+        display: flex;
+      }
+
+      .card-actions p {
+        margin-left: 10px;
+      }
+
+  </style>
+
+  <template>
+    <paper-card image="/images/app-icon-144.png" elevation="1" animated-shadow="false">
+      <div class="card-content">
+        <h2>[[data.conjuntaName]]</h2>
+        <span class="finishDate">hasta: [[data.finishData]]</span> <br>
+            <span class="inscritos">
+            <template is="dom-if" if="{{data.persons}}===0">
+             0
+            </template>
+            [[data.persons]]/[[data.minParticipant]] inscritos
+            </span> 
+      </div>
+      <div class="card-actions">
+        <p><iron-image src="[[data.image]]" sizing="cover"></iron-image>  [[data.vendorsName]]</p>
+      </div>
+    </paper-card>
+    <!-- <div>
+      <div class="personItem">
+
+        <div class="portait">
+          <iron-image class="avatar" sizing="contain" src="[[data.image]]"></iron-image>
+          <br>
+          <span></span>
+        </div>
+
+        <div class="title">
+          <h2>[[data.conjuntaName]]</h2>
+        </div>
+
+        <div class="pad">
+            <span class="finishDate">hasta: [[data.finishData]]</span>
+            <span class="inscritos">
+            <template is="dom-if" if="{{data.persons}}===0">
+             0
+            </template>
+            [[data.persons]]/[[data.minParticipant]] inscritos
+            </span>                    
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </template>
+
+  <script>
+
+    Polymer({
+      is: "conjunta-card",
+
+      properties: {
+        data: {
+          type: Object
+        }
+      }
+      
+    });
+
+  </script>
+
+</dom-module>

@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
   <link rel="import" href="/bower_components/paper-fab/paper-fab.html">
   <link rel="import" href="/bower_components/iron-icons/iron-icons.html">
-  <link rel="import" href="./conjunta-item.html">
+  <link rel="import" href="./conjunta-card.html">
 
 <dom-module id="conjunta-list">
 
@@ -31,11 +31,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
   <firebase-read-data path="/conjunta" app-name="conjuntaApp" response="{{conjuntas}}"></firebase-read-data>
   <paper-fab id ="fab" on-tap="newConjunta" noink icon="add" title="heart"></paper-fab>
-  <iron-list id="list" items="{{conjuntasList}}" as="person">
-    <template>
-      <conjunta-item data="{{person}}"></conjunta-item>
+    <template is="dom-repeat" items="{{conjuntasList}}">
+      <conjunta-card data="{{item}}"></conjunta-card>
     </template>
-  </iron-list>
 
 </template>
 
