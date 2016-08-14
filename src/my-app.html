@@ -20,12 +20,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="../bower_components/polymerfire/firebase-app.html">
+<link rel="import" href="../bower_components/iron-localstorage/iron-localstorage.html">
 <link rel="import" href="./users-list/users-list.html">
 <link rel="import" href="./sng-signIn/sng-signIn.html">
 <link rel="import" href="./register-user-form/register-user-form.html">
 <link rel="import" href="my-icons.html">
 <link rel="import" href="app-theme.html">
 <link rel="import" href="conjunta-list.html">
+<link rel="import" href="new-conjunta-form/new-conjunta-form.html">
 
 <dom-module id="my-app">
 
@@ -65,7 +67,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     </style>
-
+   
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -79,7 +81,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-drawer>
           <app-toolbar>Menu</app-toolbar>
           <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
-            <a name="view2" href="/view2">View Two</a>
             <a name="view3" href="/view3">Conjunta List</a>
 
           </iron-selector>
@@ -103,10 +104,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             api-key="AIzaSyD9wRqDg8FSIibOA4eGU9ajYjltwdUPmVw"
             storage-bucket="conjuntaapp.appspot.com">
       </firebase-app>
-
+       <iron-localstorage name="cookie-user"
+        value="{{userCookie}}"
+        ></iron-localstorage>
           <sng-sign-in name="view1"></sng-sign-in>
-          <register-user-form user="{{user}}"name="view2"></register-user-form>
+          <register-user-form user="{{user}}" name="view2"></register-user-form>
           <conjunta-list name="view3"></conjunta-list>
+          <new-conjunta-form user="{{userCookie}}" name="new-conjunta"></new-conjunta-form>
         </iron-pages>
 
       </app-header-layout>
@@ -134,12 +138,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         user:{
           type: Object
+        },
+        userCookie:{
+          type: Object
         }
 
       },
       listeners:{
         'login':'loginAuth',
-        'register-succesfull':'registerSucces'
+        'register-succesfull':'registerSucces',
+        'new-conjunta':'newConjunta',
+        'add-conjunta-succesfull': '_addConjuntaSuccesfull'
       },
 
       observers: [
@@ -147,8 +156,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _routePageChanged: function(page) {
+        if(this.user){
+          this.page = 'view3';
+        }
+        else{
         this.page = page || 'view1';
-       
+       }
       },
 
       _pageChanged: function(page) {
@@ -158,6 +171,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       loginAuth: function(ev, param){
         this.set('user', param.user);
+
           
         if(!param.exist){
           this.set("page","view2");
@@ -173,6 +187,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.set("page","view3");
           this.set('route.path', '/view3');
           
+      },
+      newConjunta: function(){
+        this.set("page","new-conjunta");
+        this.set('route.path', '/new-conjunta');
+      },
+      _addConjuntaSuccesfull: function(){
+
+        this.set("page","view3");
+        this.set('route.path', '/view3');
+      },
+      initializeDefaultCookies: function(){
+        console.log("hola que ase")
       }
 
     });

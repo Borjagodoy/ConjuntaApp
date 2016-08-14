@@ -7,6 +7,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">  
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">  
+<link rel="import" href="../../bower_components/local-storage/local-storage.html">  
 
 <link rel="import" href="./sng-signIn-styles.html">
 
@@ -27,6 +28,10 @@ Examples:
   <style include="sng-signIn-styles"></style>
 
   <template>  
+   <iron-localstorage name="cookie-user"
+    value="{{userCookie}}"
+    on-iron-localstorage-load-empty="initializeDefaultCookie"
+  ></iron-localstorage>
     <paper-material elevation="1"> 
        <img src="http://orizhial.com/wp-content/uploads/2014/05/Facebook-cambia-el-nivel-de-privacidad-por-defecto.jpg">
         <form is="iron-form" hidden="true" method="get" action="/" id="eventsDemo">
@@ -67,6 +72,9 @@ Examples:
         uidSearch:{
           type: String,
           value:""
+        },
+        userCookie:{
+          type:Object
         }
       },
       listeners:{
@@ -94,12 +102,18 @@ Examples:
         this.error = null;
         this.$.auth.signOut();
       },
-      _existUser: function(ev,exist){
+      _existUser: function(ev,param){
 
-        if(!exist){
+        if(!param.exist){
           this.set("userData", this.user); 
         }
-        this.fire("login",{"user":this.userData, "exist":exist});
+        else{
+          this.set("userCookie",param.user);
+        }
+        this.fire("login",{"user":param.user, "exist":param.exist});
+      },
+      initializeDefaultCookie: function (){
+        this.userCookie = null;
       }
     });
   </script>

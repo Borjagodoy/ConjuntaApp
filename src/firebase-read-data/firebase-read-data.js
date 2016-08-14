@@ -65,7 +65,9 @@
           this.$.query.ref.once("value")
           .then(function(snapshot) {
             var exist = snapshot.child(self.uidSearch).exists();
-           self.fire("exist-item", exist);       
+            var user = snapshot.child(self.uidSearch).val();
+           self.fire("exist-item",{"exist":exist,
+                                   "user": user});       
       });
     }
     }

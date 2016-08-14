@@ -119,8 +119,13 @@
         </div>
 
         <div class="pad">
-
-            <span class="inscritos">[[data.persons]] inscritos</span>                    
+            <span class="finishDate">hasta: [[data.finishData]]</span>
+            <span class="inscritos">
+            <template is="dom-if" if="{{data.persons}}===0">
+             0
+            </template>
+            [[data.persons]]/[[data.minParticipant]] inscritos
+            </span>                    
           </div>
         </div>
       </div>

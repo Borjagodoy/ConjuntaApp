@@ -1,0 +1,88 @@
+<link rel="import" href="../firebase-write-data/firebase-write-data.html">
+<link rel="import" href="./new-conjunta-form-style.html">
+<link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
+<link rel="import" href="/bower_components/paper-card/paper-card.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<!--<link rel="import" href="/bower_components/paper-date-picker/paper-date-picker.html">-->
+<link rel="import" href="/bower_components/paper-dialog/paper-dialog.html">
+
+
+
+<dom-module id="new-conjunta-form">
+
+  <template>
+
+    <style include="new-conjunta-form-styles"></style>
+      
+      <div class="content">
+
+        <paper-card heading="A crear una nueva conjunta :)">
+          <div class="card-content">
+          <form >
+              <paper-input name="nameconjunta" label="Nombre de conjunta" value="{{conjunta.name}}" char-counter auto-validate pattern="[0-9a-zA-Z_\-]{4,32}" char-counter maxlength="32" error-message="Username must have between 4 and 32 letters, numbers, - or _." required></paper-input>
+              <paper-input name="finish-date" label="Fecha de fin (dd/mm/yyyy)" value="{{conjunta.finishDate}}" error-message="Insert a valid date" auto-validate pattern="^(?:(?:0?[1-9]|1\d|2[0-8])\/(?:0?[1-9]|1[0-2]))\/(?:[1-9]\d\d\d|\d[1-9]\d\d|\d\d[1-9]\d|\d\d\d[1-9])$|^(?:(?:31\/(?:0?[13578]|1[02]))|(?:(?:29|30)\/(?:0?[1,3-9]|1[0-2])))\/(?:[1-9]\d\d\d|\d[1-9]\d\d|\d\d[1-9]\d|\d\d\d[1-9])$|^(29\/0?2)\/(?:(?:0[48]00|[13579][26]00|[2468][048]00)|(?:\d\d)?(?:0[48]|[2468][048]|[13579][26]))$" required></paper-input>
+              <!--<paper-dialog id="dialog" class="paper-date-picker-dialog" modal
+                on-iron-overlay-closed="dismissDialog">
+                <paper-date-picker id="picker" date="[[date]]"></paper-date-picker>
+                <div class="buttons">
+                  <paper-button dialog-dismiss>Cancel</paper-button>
+                  <paper-button dialog-confirm>OK</paper-button>
+                </div>
+              </paper-dialog>
+              <paper-button raised onclick="dialog.open()">Birthday</paper-button>-->
+
+              <paper-input name="minparticipants" value="{{conjunta.minParticipant}}" label="Mínimo de participantes"></paper-input>
+              <paper-textarea name="Bio" label="Descripción" value="{{conjunta.description}}"  char-counter maxlength="500"></paper-textarea>
+              <br>
+              <div class="output"></div>
+            </form>
+          </div>
+          <div class="card-actions">
+            <paper-button class="send" on-tap="sendConjuntaData">Send</paper-button>
+          </div>
+        </paper-card>
+      </div>
+      <firebase-write-data app-name="conjuntaApp" path="/conjunta/" data="{{conjuntaData}}" uid="{{conjuntaData.uid}}"></firebase-write-data>
+  </template>
+
+<script>
+(function() {
+  Polymer({
+    is: 'new-conjunta-form',
+    properties: {
+      user: {
+        type: Object
+      },
+      conjunta:{
+        type: String
+      },
+      conjuntaData:{
+        type: Object
+      }
+    },
+    ready:function(){
+      this.conjunta ={
+        "name":""
+      }
+    },
+     sendConjuntaData: function(){
+      var uid = this._randomUid();
+      console.log(this.conjunta.nombre);
+      console.log(this.user);
+
+       this.set("conjuntaData", {"conjuntaInfo":this.conjunta,
+                                  "uid": uid,
+                                  "user": this.user});
+       this.fire("add-conjunta-succesfull",{response:"Add conjunta succesfull"})
+     },
+     _randomUid: function(){
+        return '_' + Math.random().toString(36).substr(2, 9);
+      },
+     
+  });
+})();
+</script>
+
+</dom-module>
