@@ -16,7 +16,9 @@
   <template>
 
     <style include="register-user-form-styles"></style>
-      
+      <iron-localstorage name="cookie-user"
+        value='{"name":"borja","provinci":"Badajoz"}'
+        ></iron-localstorage>
       <div class="content">
         <iron-localstorage name="cookie-user"
             value="{{userCookie}}"

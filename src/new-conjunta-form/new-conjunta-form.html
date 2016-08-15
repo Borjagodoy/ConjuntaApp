@@ -16,7 +16,9 @@
   <template>
 
     <style include="new-conjunta-form-styles"></style>
-      
+      <iron-localstorage name="cookie-user"
+        value='{{user}}'
+        ></iron-localstorage>
       <div class="content">
         <paper-card heading="A crear una nueva conjunta :)">
           <div class="card-content">
@@ -47,7 +49,7 @@
           </div>
         </paper-card>
       </div>
-      <firebase-write-data app-name="conjuntaApp" path="/conjunta/" data="{{conjuntaData}}" uid="{{conjuntaData.uid}}"></firebase-write-data>
+      <firebase-write-data id="conjuntaWrite" app-name="conjuntaApp" path="/conjunta/" data="{{conjuntaData}}" uid="{{conjuntaData.uid}}"></firebase-write-data>
   </template>
 
 <script>
@@ -81,6 +83,7 @@
                                   "uid": uid,
                                   "user": this.user});
        //if(this.validate()){
+        this.$.conjuntaWrite.update("users/",this.user.uid+"/conjuntasCreated/"+uid, this.conjunta);
         this.fire("add-conjunta-succesfull",{response:"Add conjunta succesfull"});
         this.set("conjunta", {});
        //}

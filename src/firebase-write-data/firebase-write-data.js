@@ -51,9 +51,15 @@
         this.$.document.path=this.path+uid;
         this.$.document.ref.remove();
       },
-      update: function(uid, data){
+      update: function(path,uid, data){
+        if(path){
+          path = path+uid;
+        }
+        else{
         var path = this.$.document.path=this.path+uid;
-        console.log("set",data);
+        }
+        console.log("set in ",path,":",data);
+
         this.$.document.setStoredValue(path, data);
       }
   });
