@@ -132,12 +132,15 @@
         margin-left: 0.5;
       }
 
+      .price {
+        float: right;
+      }
   </style>
 
   <template>
     <paper-card on-tap="conjuntaDetail" image="[[data.imageConjunta]]" elevation="1" animated-shadow="false">
       <div class="card-content">
-        <h2>[[data.conjuntaName]]</h2>
+        <h2>[[data.conjuntaName]] <small class="price">Desde {{data.price}} €</small></h2>
         <span class="finishDate">hasta: [[data.finishData]]</span> <br>
             <span class="inscritos">
             <template is="dom-if" if="{{data.persons}}===0">
