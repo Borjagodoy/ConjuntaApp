@@ -46,9 +46,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app-header paper-icon-button {
         --paper-icon-button-ink-color: white;
       }
-
+      app-drawer app-toolbar{
+        height: 33%;
+        padding: 0;
+        background:url("https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRCAs-JyqeCdi44-yG1qyVPrT0RcxDU4FlFt5Bv4Pql9DIgbMGD");
+      }
+      app-drawer app-toolbar img{
+        height: 90px;
+        width: 90px;
+        margin-left: 5%;
+        /* los siguientes valores son independientes del tamaño del círculo */
+        background-repeat: no-repeat;
+        background-position: 50%;
+        border-radius: 50%;
+        background-size: 100% auto;
+      }
+      .userData{
+        width: 100%;
+      }
+      .userInfo{
+        color:#fff;
+        font-size: 0.8em;
+        width:90%;
+        overflow:hidden;
+        margin-left: 5%;
+      }
       .drawer-list {
-        margin: 0 20px;
       }
       .drawer-list a {
         display: block;
@@ -58,8 +81,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: var(--app-secondary-color);
       }
       .drawer-list a.iron-selected {
-        color: black;
-        font-weight: bold;
+        color: #000;
+        border-bottom : solid 1px #BDBDBD ;
       }
       .drawer-list a.subroute {
         padding-left: 32px;
@@ -67,7 +90,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
     </style>
-   
+    <iron-localstorage name="cookie-user"
+        value={{userCookie}}
+        ></iron-localstorage>
     <app-location route="{{route}}"></app-location>
     <app-route
         route="{{route}}"
@@ -79,7 +104,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      
         <!-- Drawer content -->
         <app-drawer>
-          <app-toolbar>Menu</app-toolbar>
+          <app-toolbar>
+           <div class ="userData"> 
+              <img src="{{userCookie.photoURL}}">
+              <div class="userInfo">
+                <span>{{userCookie.userName}}</span>
+                <span>{{userCookie.email}}</span>
+              </div>
+            </div>
+          </app-toolbar>
           <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
             <a name="view3" href="/view3">Conjunta List</a>
 
@@ -104,9 +137,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             api-key="AIzaSyD9wRqDg8FSIibOA4eGU9ajYjltwdUPmVw"
             storage-bucket="conjuntaapp.appspot.com">
       </firebase-app>
-       <iron-localstorage name="cookie-user"
-        value='{"name":"borja","provinci":"Badajoz"}'
-        ></iron-localstorage>
+      
           <sng-sign-in name="view1"></sng-sign-in>
           <register-user-form user="{{user}}" name="view2"></register-user-form>
           <conjunta-list name="view3"></conjunta-list>
@@ -156,8 +187,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _routePageChanged: function(page) {
-          this.page = 'view3';
-        
         this.page = page || 'view1';
        
       },
@@ -168,8 +197,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.resolveUrl('my-' + page + '.html'), null, null, true);
       },
       loginAuth: function(ev, param){
-        console.log("login", param.user)
-        console.log("exist", param.exist)
         this.set('user', param.user);
 
           
