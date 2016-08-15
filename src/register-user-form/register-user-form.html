@@ -60,14 +60,8 @@
       }
     },
      sendUserData: function(){
-      console.log(document.getElementById("form"))
-      if (!document.getElementById("form").validate()){
-          document.getElementByClassName("send").disabled();
-        }else{
-          this.set("userData", this.user);
-          this.fire("register-succesfull",{response:"Register succesfull"});
-        }
-       
+      this.set("userData", this.user);
+      this.fire("register-succesfull",{response:"Register succesfull"});
      }
      
   });
