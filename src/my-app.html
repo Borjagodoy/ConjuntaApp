@@ -92,7 +92,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <app-header condenses reveals effects="waterfall" fixed>
           <app-toolbar>
             <paper-icon-button icon="menu" drawer-toggle></paper-icon-button>
-            <div title>My App</div>
+            <div title>Conjuntea</div>
           </app-toolbar>
         </app-header>
 
@@ -105,7 +105,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             storage-bucket="conjuntaapp.appspot.com">
       </firebase-app>
        <iron-localstorage name="cookie-user"
-        value="{{userCookie}}"
+        value='{"name":"borja","provinci":"Badajoz"}'
         ></iron-localstorage>
           <sng-sign-in name="view1"></sng-sign-in>
           <register-user-form user="{{user}}" name="view2"></register-user-form>
@@ -156,12 +156,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       ],
 
       _routePageChanged: function(page) {
-        if(this.user){
           this.page = 'view3';
-        }
-        else{
+        
         this.page = page || 'view1';
-       }
+       
       },
 
       _pageChanged: function(page) {
@@ -170,20 +168,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.resolveUrl('my-' + page + '.html'), null, null, true);
       },
       loginAuth: function(ev, param){
+        console.log("login", param.user)
+        console.log("exist", param.exist)
         this.set('user', param.user);
 
           
         if(!param.exist){
           this.set("page","view2");
-          this.set('route.path', '/view2')
+          this.set('route.path', '/view2');
+          console.log("registro");
 
         }
         else{
+          this.set('userCookie', param.user);
           this.set("page","view3");
           this.set('route.path', '/view3')
+          console.log("lista-conjuntas");
         }
       },
       registerSucces: function(ev, param){
+
+          this.set('userCookie', param.user);
           this.set("page","view3");
           this.set('route.path', '/view3');
           

@@ -7,6 +7,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">  
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">  
+<link rel="import" href="../../bower_components/iron-localstorage/iron-localstorage.html">  
  
 
 <link rel="import" href="./sng-signIn-styles.html">
@@ -28,7 +29,7 @@ Examples:
   <style include="sng-signIn-styles"></style>
 
   <template>  
-   <iron-localstorage name="cookie-user"
+   <iron-localstorage id="local" name="cookie-user"
     value="{{userCookie}}"
     on-iron-localstorage-load-empty="initializeDefaultCookie"
   ></iron-localstorage>
@@ -105,15 +106,19 @@ Examples:
       _existUser: function(ev,param){
 
         if(!param.exist){
-          this.set("userData", this.user); 
+          this.set("userData", this.user);
+          this.fire("login",{"user":this.userData, "exist":param.exist}); 
         }
         else{
+          console.log("coockiendo")
           this.set("userCookie",param.user);
+          this.$.local.save();
+          this.fire("login",{"user":param.user, "exist":param.exist});
         }
-        this.fire("login",{"user":param.user, "exist":param.exist});
+        
       },
       initializeDefaultCookie: function (){
-        this.userCookie = null;
+        this.userCookie = {"uid":""};
       }
     });
   </script>

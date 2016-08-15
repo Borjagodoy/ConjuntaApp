@@ -5,6 +5,7 @@
 <link rel="import" href="/bower_components/paper-input/paper-input.html">
 <link rel="import" href="/bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
 <!--<link rel="import" href="/bower_components/paper-date-picker/paper-date-picker.html">-->
 <link rel="import" href="/bower_components/paper-dialog/paper-dialog.html">
 
@@ -17,7 +18,10 @@
     <style include="register-user-form-styles"></style>
       
       <div class="content">
-
+        <iron-localstorage name="cookie-user"
+            value="{{userCookie}}"
+            on-iron-localstorage-load-empty="initializeDefaultCookie"
+          ></iron-localstorage>
         <paper-card heading="¡Bienvenido {{user.displayName}}!">
           <div class="card-content">
           <form is="iron-form" method="get" action="/" id="basic">
@@ -57,18 +61,20 @@
       },
       userData:{
         type: Object
+      },
+      userCookie:{
+        type:Object
       }
     },
      sendUserData: function(){
-      console.log(document.getElementById("form"))
-      if (!document.getElementById("form").validate()){
-          document.getElementByClassName("send").disabled();
-        }else{
-          this.set("userData", this.user);
-          this.fire("register-succesfull",{response:"Register succesfull"});
-        }
-       
-     }
+      this.set("userData", this.user);
+      this.set("userCookie", this.user);
+      this.fire("register-succesfull",{response:"Register succesfull",user:this.user});
+
+     },
+      initializeDefaultCookie: function (){
+        this.userCookie = null;
+      }
      
   });
 })();
