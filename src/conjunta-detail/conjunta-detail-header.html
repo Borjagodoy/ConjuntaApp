@@ -9,7 +9,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
   <link rel="import" href="/bower_components/polymer/polymer.html">
-	<link rel="import" href="/bower_components/paper-fab/paper-fab.html">
+  <link rel="import" href="/bower_components/paper-fab/paper-fab.html">
+  <link rel="import" href="/bower_components/neon-animation/animations/scale-up-animation.html">
+  <link rel="import" href="/bower_components/neon-animation/animations/fade-out-animation.html">
+  <link rel="import" href="/bower_components/paper-dialog/paper-dialog.html">
+  <link rel="import" href="/bower_components/paper-listbox/paper-listbox.html">
+  <link rel="import" href="/bower_components/paper-item/paper-item.html">
+  <link rel="import" href="/bower_components/paper-input/paper-input.html">
+	<link rel="import" href="/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
   <link rel="import" href="./conjunta-detail-info.html">
 
 <dom-module id="conjunta-detail-header">
@@ -79,6 +86,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   	bottom: 10px;
   	z-index: 111;
   }
+
+  paper-dialog {
+    z-index: 200;
+  }
 </style>
 
 <template>
@@ -88,8 +99,31 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   	<div class="conjunta-title">{{data.conjuntaName}}</div>
   	
   	<div class="conjunta-price">{{data.price}} €</div>
-  	<paper-fab icon="check"></paper-fab>
+  	<paper-fab icon="check" on-tap="openModal"></paper-fab>
   </div>
+
+  <paper-dialog id="dialog">
+    <h1>{{data.conjuntaName}} <small>{{data.price}} €</small></h1>
+
+    <form is="iron-form" id="form" method="post" action="/">
+
+      <paper-dropdown-menu label="Número artículos">
+        <paper-listbox class="dropdown-content">
+          <paper-item>1</paper-item>
+          <paper-item>2</paper-item>
+          <paper-item>3</paper-item>
+          <paper-item>4</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
+      
+        <paper-input label="Dirección envío"></paper-input>
+        <paper-input label="Dirección 2"></paper-input>
+        <paper-input label="CP"></paper-input>
+    </form>
+    <div class="buttons">
+      <paper-button dialog-confirm autofocus>Inscribirse</paper-button>
+    </div>
+  </paper-dialog>
 
   <conjunta-detail-info data="{{data}}"></conjunta-detail-info>
 </template>
@@ -103,7 +137,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     properties: {
       data: {
         type: Object
+      },
+
+      modal: {
+        type: Boolean,
+        value: false
       }
+    },
+
+    openModal: function() {
+      this.$.dialog.toggle();
     }
   });
 </script>
