@@ -96,25 +96,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-card class="rate">
       <div class="rate-content">
         <div class="card-content">
-          <div class="vendor-info"><img src="/images/app-icon-32.png" alt="" class="vendor-image"> <span>Pepito China S.A.</span></div>          
+          <div class="vendor-info"><img src="{{data.image}}" alt="" class="vendor-image"> <span>{{data.vendorsName}}</span></div>          
         </div>
       </div>
     </paper-card>
 
     <div class="conjunta-description">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero voluptatem rem alias a enim voluptates mollitia soluta quo quas, officiis eaque numquam, voluptas odio facere adipisci culpa. Veritatis, eaque, architecto.
+      {{data.description}}
     </div>
 
     <div class="conjunta-state">
       <div class="status-bar">
-        <div class="captation">Captación <br> <span class="date">10/08/2016</span></div> 
-        <div class="negotiation">Negociación <br><span class="date">10/08/2016</span></div> 
-        <div class="deliveries">Envios <br><span class="date">10/08/2016</span></div>
+        <div class="captation">Captación <br> <span class="date">{{data.finishData}}</span></div> 
+        <div class="negotiation">Negociación <br><span class="date">???</span></div> 
+        <div class="deliveries">Envios <br><span class="date">???</span></div>
       </div>
     </div>
 
     <div class="conjunta-subscribed">
-      <h3>25/100 Inscritos</h3>
+      <h3>25/{{data.minParticipant}} inscritos</h3>
     </div>
   </div>
   
@@ -124,7 +124,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <script type="text/javascript">
   Polymer({
-    is: "conjunta-detail-info"
+    is: "conjunta-detail-info",
+
+    properties: {
+      data: {
+        type: Object
+      }
+    }
   });
 </script>
 

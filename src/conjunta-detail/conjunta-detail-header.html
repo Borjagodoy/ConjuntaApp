@@ -90,22 +90,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <template>
   <div class="header-content">
-  	<img src="/images/app-icon-144.png" alt="" class="header-image">
+  	<img src="{{data.imageConjunta}}" alt="" class="header-image">
   	
-  	<div class="conjunta-title">Xiaomi MI 5</div>
+  	<div class="conjunta-title">{{data.conjuntaName}}</div>
   	
-  	<div class="conjunta-price">150 €</div>
+  	<div class="conjunta-price">{{data.price}} €</div>
   	<paper-fab icon="check"></paper-fab>
   </div>
 
-  <conjunta-detail-info></conjunta-detail-info>
+  <conjunta-detail-info data="{{data}}"></conjunta-detail-info>
 </template>
 
 
 
 <script type="text/javascript">
   Polymer({
-    is: "conjunta-detail-header"
+    is: "conjunta-detail-header",
+
+    properties: {
+      data: {
+        type: Object
+      }
+    }
   });
 </script>
 

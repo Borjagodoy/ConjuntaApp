@@ -135,7 +135,7 @@
   </style>
 
   <template>
-    <paper-card image="[[data.imageConjunta]]" elevation="1" animated-shadow="false">
+    <paper-card on-tap="conjuntaDetail" image="[[data.imageConjunta]]" elevation="1" animated-shadow="false">
       <div class="card-content">
         <h2>[[data.conjuntaName]]</h2>
         <span class="finishDate">hasta: [[data.finishData]]</span> <br>
@@ -162,6 +162,10 @@
         data: {
           type: Object
         }
+      },
+
+      conjuntaDetail: function() {
+        this.fire("detail-card-conjunta", this.data);
       }
       
     });
