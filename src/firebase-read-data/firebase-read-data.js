@@ -60,14 +60,16 @@
       *return tru if exist te uid in firebase database.
       */
       exist: function(){
+        console.log("hola", this.uidSearch)
         var self = this;
         if(this.$.query.ref && this.uidSearch){
           this.$.query.ref.once("value")
           .then(function(snapshot) {
             var exist = snapshot.child(self.uidSearch).exists();
-            var user = snapshot.child(self.uidSearch).val();
+            var data = snapshot.child(self.uidSearch).val();
+            console.log(data)
            self.fire("exist-item",{"exist":exist,
-                                   "user": user});       
+                                   "user": data});       
       });
     }
     }

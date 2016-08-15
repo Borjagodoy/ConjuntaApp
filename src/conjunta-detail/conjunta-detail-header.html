@@ -12,6 +12,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 	<link rel="import" href="/bower_components/paper-fab/paper-fab.html">
   <link rel="import" href="./conjunta-detail-info.html">
 
+  <link rel="import" href="/bower_components/iron-localstorage/iron-localstorage.html">
+  <link rel="import" href="/../firebase-read-data/firebase-read-data.html">
+
 <dom-module id="conjunta-detail-header">
 
 <style type="text/css">
@@ -89,23 +92,76 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </style>
 
 <template>
+ <iron-localstorage name="cookie-card"
+        value='{{detailCookie}}'
+        on-iron-localstorage-load-empty="initializeDefaultConjuntaDetail"
+  ></iron-localstorage>
   <div class="header-content">
-  	<img src="/images/app-icon-144.png" alt="" class="header-image">
+  	<img src="{{conjuntaDetail.conjuntaInfo.imageUrl}}" alt="" class="header-image">
   	
-  	<div class="conjunta-title">Xiaomi MI 5</div>
+  	<div class="conjunta-title">{{conjuntaDetail.conjuntaInfo.name}}</div>
   	
-  	<div class="conjunta-price">150 €</div>
+  	<div class="conjunta-price">{{conjuntaDetail.conjuntaInfo.estimatePrice}} €</div>
   	<paper-fab icon="check"></paper-fab>
   </div>
 
-  <conjunta-detail-info></conjunta-detail-info>
+  <conjunta-detail-info data="{{conjuntaDetail}}"></conjunta-detail-info>
+  {{detailConjunta}}
+  <firebase-read-data id="detailRead" path="/conjunta" app-name="conjuntaApp"  uid-search="{{data}}"></firebase-read-data>
+
 </template>
 
 
 
 <script type="text/javascript">
   Polymer({
-    is: "conjunta-detail-header"
+    is: "conjunta-detail-header",
+   properties: {
+      data: {
+        type: String,
+        value:"",
+        observer: "saveCoockieUid"
+        
+      },
+      urlGetdata:{
+        type:String
+      },
+      conjuntaDetail:{
+        type: Object,
+        observer:"_mapping"
+      },
+      detailCookie:{
+        type:Object,
+        observer: "getDataCookie"
+      }
+    },
+     listeners:{
+    "exist-item": "_getconjuntaInfo"
+   },
+    saveCoockieUid: function(){
+        if(this.data){
+          this.set("detailCookie", this.data);
+        }
+        else{
+          console.log("vacio");
+        }
+        
+    },
+    getDataCookie: function(){
+      if(this.detailCookie){
+        this.set("data",this.detailCookie);
+      } 
+      else{
+        console.log("cookies-Vacias");
+      }
+    },
+    _getconjuntaInfo: function(ev,conjuntaDetail){
+      console.log("listener->",conjuntaDetail.user)
+     this.set("conjuntaDetail",conjuntaDetail.user); 
+   },
+   initializeDefaultConjuntaDetail: function (){
+      this.set("detailCookie",{});
+   }
   });
 </script>
 
